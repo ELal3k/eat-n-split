@@ -29,7 +29,9 @@ function App() {
       <div className="sidebar">
         <FriendsList />
         {showAddFriend && <FormAddFriend />}
-        <Button onClick={handleClick}>Add Friend</Button>
+        <Button onClick={handleClick}>
+          {showAddFriend ? "Close" : "Add Friend"}
+        </Button>
       </div>
 
       <FormSplitBill />
@@ -83,16 +85,32 @@ function Friend({ friend }) {
 }
 
 function FormAddFriend() {
+  const [newFriendName, setNewFriendName] = useState("")
+  const [newFriendImage, setNewFriendImage] = useState("")
+
+  const id = crypto.randomUUID()
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    const newFriend = {
+      name: newFriendName,
+      image: newFriendImage,
+      balance: 0,
+    }
+  }
+  console.log("name", newFriendName, "image", newFriendImage)
   return (
     <div>
       <form className="form-add-friend">
         <label> 👬Friend Name</label>
-        <input type="text" />
+        <input type="text" onChange={(e) => setNewFriendName(e.target.value)} />
         <label> 🌄Image URL</label>
-        <input type="text" />
+        <input
+          type="text"
+          onChange={(e) => setNewFriendImage(e.target.value)}
+        />
         <Button>Add</Button>
       </form>
-      <Button onClick={() => console.log("Submit")}>Submit</Button>
     </div>
   )
 }
