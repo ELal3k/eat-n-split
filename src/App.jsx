@@ -21,14 +21,15 @@ const initialFriends = [
 ]
 function App() {
   const [showAddFriend, setShowAddFriend] = useState(false)
+  const [friends, setFriends] = useState(initialFriends)
   function handleClick() {
     setShowAddFriend((prev) => !prev)
   }
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList />
-        {showAddFriend && <FormAddFriend />}
+        <FriendsList friends={friends} />
+        {showAddFriend && <FormAddFriend friends={friends} />}
         <Button onClick={handleClick}>
           {showAddFriend ? "Close" : "Add Friend"}
         </Button>
@@ -49,8 +50,7 @@ function Button({ children, onClick }) {
   )
 }
 
-function FriendsList() {
-  const friends = initialFriends
+function FriendsList({ friends }) {
   return (
     <ul>
       {friends.map((friend) => (
@@ -84,26 +84,34 @@ function Friend({ friend }) {
   )
 }
 
-function FormAddFriend() {
+function FormAddFriend({ friends }) {
   const [newFriendName, setNewFriendName] = useState("")
   const [newFriendImage, setNewFriendImage] = useState("")
 
-  const id = crypto.randomUUID()
-
   function handleSubmit(e) {
     e.preventDefault()
+    if (!newFriendName || !newFriendImage) return
+    const id = crypto.randomUUID()
     const newFriend = {
-      name: newFriendName,
-      image: newFriendImage,
+      id,
+      newFriendName,
+      image: `${newFriendImage}?u=${id}`,
       balance: 0,
     }
+    setNewFriendName("")
+    setNewFriendImage("https://i.pravatar.cc/48")
+    console.log(newFriend)
   }
-  console.log("name", newFriendName, "image", newFriendImage)
+
   return (
     <div>
-      <form className="form-add-friend">
+      <form className="form-add-friend" onSubmit={handleSubmit}>
         <label> 👬Friend Name</label>
-        <input type="text" onChange={(e) => setNewFriendName(e.target.value)} />
+        <input
+          type="text"
+          value={newFriendName}
+          onChange={(e) => setNewFriendName(e.target.value)}
+        />
         <label> 🌄Image URL</label>
         <input
           type="text"
