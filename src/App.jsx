@@ -22,7 +22,6 @@ const initialFriends = [
 function App() {
   const [showAddFriend, setShowAddFriend] = useState(false)
   const [friends, setFriends] = useState(initialFriends)
-  const [showSplitBill, setShowSplitBill] = useState(true)
 
   function handleAddFriend(newFriend) {
     setFriends((friends) => [...friends, newFriend])
@@ -41,7 +40,7 @@ function App() {
         </Button>
       </div>
 
-      {showSplitBill && <FormSplitBill />}
+      <FormSplitBill />
     </div>
   )
 }
