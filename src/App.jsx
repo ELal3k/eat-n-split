@@ -22,6 +22,11 @@ const initialFriends = [
 function App() {
   const [showAddFriend, setShowAddFriend] = useState(false)
   const [friends, setFriends] = useState(initialFriends)
+
+  function handleAddFriend(newFriend) {
+    setFriends((friends) => [...friends, newFriend])
+    setShowAddFriend(false)
+  }
   function handleClick() {
     setShowAddFriend((prev) => !prev)
   }
@@ -29,7 +34,7 @@ function App() {
     <div className="app">
       <div className="sidebar">
         <FriendsList friends={friends} />
-        {showAddFriend && <FormAddFriend friends={friends} />}
+        {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend} />}
         <Button onClick={handleClick}>
           {showAddFriend ? "Close" : "Add Friend"}
         </Button>
@@ -84,7 +89,7 @@ function Friend({ friend }) {
   )
 }
 
-function FormAddFriend({ friends }) {
+function FormAddFriend({ onAddFriend }) {
   const [newFriendName, setNewFriendName] = useState("")
   const [newFriendImage, setNewFriendImage] = useState("")
 
@@ -94,10 +99,11 @@ function FormAddFriend({ friends }) {
     const id = crypto.randomUUID()
     const newFriend = {
       id,
-      newFriendName,
+      name: newFriendName,
       image: `${newFriendImage}?u=${id}`,
       balance: 0,
     }
+    onAddFriend(newFriend)
     setNewFriendName("")
     setNewFriendImage("https://i.pravatar.cc/48")
     console.log(newFriend)
