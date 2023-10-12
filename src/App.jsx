@@ -31,17 +31,21 @@ function App() {
   function handleClick() {
     setShowAddFriend((prev) => !prev)
   }
+
+  function handleSelectFriend(friend) {
+    setSelectedFriend(friend)
+  }
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList friends={friends} />
+        <FriendsList friends={friends} onSelectFriend={handleSelectFriend} />
         {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend} />}
         <Button onClick={handleClick}>
           {showAddFriend ? "Close" : "Add Friend"}
         </Button>
       </div>
 
-      {selectedFriend && <FormSplitBill />}
+      {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} />}
     </div>
   )
 }
@@ -56,17 +60,21 @@ function Button({ children, onClick }) {
   )
 }
 
-function FriendsList({ friends }) {
+function FriendsList({ friends, onSelectFriend }) {
   return (
     <ul>
       {friends.map((friend) => (
-        <Friend key={friend.id} friend={friend} />
+        <Friend
+          key={friend.id}
+          friend={friend}
+          onSelectFriend={onSelectFriend}
+        />
       ))}
     </ul>
   )
 }
 
-function Friend({ friend }) {
+function Friend({ friend, onSelectFriend }) {
   return (
     <li>
       <img src={friend.image} alt={friend.name} />
@@ -85,7 +93,7 @@ function Friend({ friend }) {
       )}
       {friend.balance === 0 && <p>You and {friend.name} are even </p>}
 
-      <Button>Select</Button>
+      <Button onClick={() => onSelectFriend(friend)}>Select</Button>
     </li>
   )
 }
@@ -130,10 +138,13 @@ function FormAddFriend({ onAddFriend }) {
   )
 }
 
-function FormSplitBill() {
+function FormSplitBill({ selectedFriend }) {
+  function handleSubmit(e) {
+    e.preventDefault()
+  }
   return (
-    <form className="form-split-bill">
-      <h2>Split a bill with X</h2>
+    <form className="form-split-bill" onSubmit={handleSubmit}>
+      <h2>Split a bill with {selectedFriend.name}</h2>
 
       <label>💰Bill Value</label>
       <input type="text" />
@@ -141,12 +152,12 @@ function FormSplitBill() {
       <label>🧍‍♂️Your expense </label>
       <input type="text" disabled />
 
-      <label> 🕺🏻 X`s expense </label>
+      <label> 🕺🏻 {selectedFriend.name}`s expense </label>
       <input type="text" />
       <label>🥲 Who`s paying the bill?</label>
       <select>
         <option value="user">You</option>
-        <option value="friend">X</option>
+        <option value="friend">{selectedFriend.name}</option>
       </select>
       <Button>Split Bill</Button>
     </form>
