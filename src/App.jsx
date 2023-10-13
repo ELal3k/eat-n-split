@@ -36,6 +36,7 @@ function App() {
     setSelectedFriend((cur) => (cur?.id === friend.id ? null : friend))
     setShowAddFriend(false)
   }
+
   return (
     <div className="app">
       <div className="sidebar">
@@ -124,7 +125,6 @@ function FormAddFriend({ onAddFriend }) {
     onAddFriend(newFriend)
     setNewFriendName("")
     setNewFriendImage("https://i.pravatar.cc/48")
-    console.log(newFriend)
   }
 
   return (
@@ -148,23 +148,43 @@ function FormAddFriend({ onAddFriend }) {
 }
 
 function FormSplitBill({ selectedFriend }) {
+  const [bill, setBill] = useState("")
+  const [myExpense, setMyExpense] = useState("")
+  const [payer, setPayer] = useState("user")
+  const friendExpense = bill ? bill - myExpense : ""
+  const billBalance = payer === "user" ? friendExpense : -myExpense
+
   function handleSubmit(e) {
     e.preventDefault()
+    if (!bill || !myExpense) return
+    console.log(billBalance)
   }
   return (
     <form className="form-split-bill" onSubmit={handleSubmit}>
       <h2>Split a bill with {selectedFriend.name}</h2>
 
       <label>💰Bill Value</label>
-      <input type="text" />
+      <input
+        type="text"
+        value={bill}
+        onChange={(e) => setBill(Number(e.target.value))}
+      />
 
       <label>🧍‍♂️Your expense </label>
-      <input type="text" disabled />
+      <input
+        type="text"
+        value={myExpense}
+        onChange={(e) =>
+          setMyExpense(
+            Number(e.target.value) > bill ? myExpense : Number(e.target.value)
+          )
+        }
+      />
 
       <label> 🕺🏻 {selectedFriend.name}`s expense </label>
-      <input type="text" />
+      <input type="text" value={friendExpense} disabled />
       <label>🥲 Who`s paying the bill?</label>
-      <select>
+      <select value={payer} onChange={(e) => setPayer(e.target.value)}>
         <option value="user">You</option>
         <option value="friend">{selectedFriend.name}</option>
       </select>
