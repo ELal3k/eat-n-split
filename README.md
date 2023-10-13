@@ -36,3 +36,8 @@ Ensure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/)
 4. Start the development server:
 	```sh
 	npm start
+
+	 npm install
+4. Start the development server:
+	```sh
+	npm start
