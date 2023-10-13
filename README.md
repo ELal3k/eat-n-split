@@ -1,6 +1,6 @@
 # Eat'n'Split
 
-![App Screenshot](your-app-screenshot-url)
+![App Screenshot](src/assets/Split_the_bill.png)
 
 ## Overview
 
