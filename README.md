@@ -37,11 +37,7 @@ Ensure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/)
 3. Install dependencies:
 	 ```sh
 	 npm install
-4. Start the development server:
-	```sh
-	npm start
 
-	 npm install
 4. Start the development server:
 	```sh
 	npm start
