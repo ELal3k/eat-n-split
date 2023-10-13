@@ -3,8 +3,10 @@
 ![App Screenshot](src/assets/Split_the_bill.png)
 
 ## Overview
-Split the Bill is a React application that allows friends to track and manage shared expenses in a user-friendly manner.
-This app is a React challenge from the [Jonas Schmedtmann's](https://codingheroes.io/) course in Udemy.
+Split the Bill is a React application that allows friends to track and manage shared expenses in a user-friendly manner.\
+
+This app is a React challenge from the [Jonas Schmedtmann's](https://codingheroes.io/) course in Udemy.\
+
 It was very helpful for me  to clarify further the concepts about state management and its  best practices!
 
 ## Features
