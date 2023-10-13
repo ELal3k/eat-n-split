@@ -16,5 +16,5 @@ Split the Bill is a React application that allows friends to track and manage sh
 Ensure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
 
 1. Clone the repository:
-   
-   `git clone https://github.com/yourusername/split-the-bill.git`
+   ```sh
+   git clone https://github.com/yourusername/split-the-bill.git
